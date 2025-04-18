@@ -4,496 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PORTFOLIO</title>
-    <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #0a192f 0%, #112240 100%), url('pics/background-pattern.png'); /* Add a subtle background pattern */
-            background-size: cover; /* Ensure the background image covers the entire viewport */
-            background-attachment: fixed; /* Make the background fixed during scrolling */
-            color: #fff;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: block; /* Change to block layout for vertical scrolling */
-            overflow-y: auto; /* Enable vertical scrolling */
-            padding: 20px;
-        }
-
-        /* Updated Container styles */
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            background-color: #1a1e29;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid #00e5ff; /* Add a glowing border */
-            padding: 30px;
-            position: relative;
-        }
-
-        /* Background glow effect */
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, #00e5ff, #00b0ff);
-            z-index: -1;
-            filter: blur(100px);
-            opacity: 0.2;
-            animation: glowPulse 5s infinite alternate;
-        }
-
-        /* Navigation */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 50px;
-        }
-
-        .nav-links {
-            display: flex;
-            flex-direction: row;
-            align-items: flex-end;
-            gap: 20px;
-        }
-
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 16px;
-            position: relative;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #00e5ff;
-        }
-
-        .nav-links a.active {
-            color: #00e5ff;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #00e5ff;
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 100%;
-        }
-
-        /* Main content */
-        .content {
-            display: flex;
-            flex-direction: column; /* Stack content vertically */
-            align-items: center; /* Center align content */
-            gap: 20px; /* Add spacing between sections */
-        }
-
-        .info {
-            flex: 1;
-        }
-
-        .greeting {
-            font-size: 18px;
-            margin-bottom: 10px;
-            opacity: 0;
-            animation: fadeInUp 0.8s forwards;
-        }
-
-        .name {
-            font-size: 48px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            opacity: 0;
-            animation: fadeInUp 0.8s 0.2s forwards;
-        }
-
-        .title {
-            font-size: 18px;
-            margin-bottom: 20px;
-            opacity: 0;
-            animation: fadeInUp 0.8s 0.4s forwards;
-        }
-
-        .title span {
-            color: #00e5ff;
-            font-weight: 600;
-        }
-
-        .description {
-            color: #b3b3b3;
-            margin-bottom: 30px;
-            opacity: 0;
-            animation: fadeInUp 0.8s 0.6s forwards;
-        }
-
-        /* Profile image */
-        .profile {
-            flex: 0.8;
-            position: relative;
-            opacity: 0;
-            animation: fadeIn 1s 0.8s forwards;
-        }
-
-        .hex-container {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            margin: 0 auto;
-        }
-
-        .hex-shape {
-            position: relative;
-            width: 100%;
-            padding-bottom: 115%;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            background-color: #00e5ff;
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
-            animation: glowPulse 4s infinite alternate;
-        }
-
-        .hex-image {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            right: 3px;
-            bottom: 3px;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            background-image: url('/api/placeholder/320/400');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .profile-image {
-            width: 200px; /* Adjust the size as needed */
-            height: 200px;
-            border-radius: 50%; /* Makes the image circular */
-            border: 4px solid #00e5ff; /* Solid border */
-            object-fit: cover; /* Ensures the image fits within the circle */
-            margin: 0 auto; /* Center the image */
-            display: block;
-        }
-
-        .profile-image:hover {
-            transform: scale(1.1); /* Slight zoom effect on hover */
-            box-shadow: 0 8px 20px rgba(0, 229, 255, 0.5); /* Add a shadow on hover */
-        }
-
-        /* Updated Social icons */
-        .social {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            opacity: 0;
-            animation: fadeInUp 0.8s 0.8s forwards;
-        }
-
-        .social a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2a2f3f, #1a1e29); /* Gradient background */
-            color: #00e5ff;
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-
-        .social a:hover {
-            transform: translateY(-5px) scale(1.1); /* Add hover effect */
-            background: linear-gradient(135deg, #00e5ff, #00b0ff); /* Change gradient */
-            color: #1a1e29;
-        }
-
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes glowPulse {
-            0% {
-                filter: brightness(0.8) blur(10px);
-            }
-            100% {
-                filter: brightness(1.2) blur(20px);
-            }
-        }
-
-        /* Skill bar styles */
-        .skill-bar {
-            background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 10px;
-            position: relative;
-            height: 20px;
-        }
-
-        .skill-bar-fill {
-            background: linear-gradient(90deg, #00e5ff, #00b0ff); /* Gradient fill */
-            height: 100%;
-            width: 0; /* Default width */
-            transition: width 0.5s ease-in-out; /* Smooth transition */
-        }
-
-        .card ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .card ul li {
-            margin-bottom: 15px;
-        }
-
-        .card ul li .skill-name {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            color: #fff;
-        }
-
-        /* Responsive styles */
-        @media (max-width: 992px) {
-            .content {
-                flex-direction: column-reverse;
-                text-align: center;
-            }
-
-            .profile {
-                margin-bottom: 40px;
-            }
-
-            .hex-container {
-                max-width: 250px;
-            }
-
-            .social {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .menu-btn {
-                display: block;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 250px;
-                background-color: #1a1e29;
-                flex-direction: column;
-                padding: 80px 30px;
-                z-index: 100;
-                transition: right 0.5s;
-                gap: 20px;
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .close-btn {
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                background: none;
-                border: none;
-                color: #fff;
-                font-size: 24px;
-                cursor: pointer;
-            }
-
-            .name {
-                font-size: 36px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px;
-            }
-
-            .hex-container {
-                max-width: 200px;
-            }
-
-            .name {
-                font-size: 32px;
-            }
-        }
-
-        /* Updated Section styles */
-        section {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 50px 20px;
-            margin: 20px 0;
-            background: linear-gradient(135deg, #112240, #0a192f); /* Gradient background */
-            border-radius: 10px;
-            border: 2px solid #00e5ff; /* Add a glowing border */
-        }
-
-        section h1 {
-            font-size: 36px;
-            color: #00e5ff;
-            margin-bottom: 20px;
-        }
-
-        section p {
-            font-size: 18px;
-            color: #b3b3b3;
-            max-width: 800px;
-        }
-
-        .skills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        /* Updated Card styles */
-        .card {
-            background: linear-gradient(135deg, #1a1e29, #112240); /* Gradient background */
-            padding: 20px;
-            border-radius: 10px;
-            border: 2px solid #00e5ff; /* Add a glowing border */
-            width: 300px;
-            text-align: left;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            position: relative;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .card:hover {
-            transform: scale(1.05); /* Slight zoom effect on hover */
-            border-color: #00b0ff; /* Change border color on hover */
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
-        }
-
-        #home {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            min-height: 100vh; /* Adjusted to ensure it spans the full height of the page */
-            padding: 20px;
-        }
-
-        #home .home-content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        #home .home-content .card {
-            display: none; /* Removed the cards from the home section */
-        }
-
-    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <nav>
-            
             <div class="nav-links" id="navLinks">
-                
-                </button>
                 <a href="#home" class="active">Home</a>
                 <a href="#about">About</a>
                 <a href="#skills">Skills</a>
                 <a href="#contact">Contact</a>
             </div>
-            
         </nav>
 
         <div class="content">
             <div class="info">
-                <div class="profile">
-                    <img src="pics/Screenshot 2025-04-10 174540.png" alt="Profile Picture" class="profile-image">
-                </div>
                 <p class="greeting">Hello, It's Me</p>
                 <h1 class="name">Pranshu Parth</h1>
                 <p class="title">And I'm a <span>Frontend Developer</span></p>
-                <p class="description">I am 2nd year student pursuing engineering from SRM Institute of Technology, Chennai. I am passionate about creating visually appealing and user-friendly websites. I have experience in HTML, CSS,  and I am always eager to learn new technologies and improve my skills. I am a hardworking and dedicated individual who is always looking for new challenges and opportunities to grow as a developer.</p>
+                <p class="description">I am 2nd year student pursuing engineering from SRM Institute of Technology, Chennai. I am passionate about creating visually appealing and user-friendly websites. I have experience in HTML, CSS, and I am always eager to learn new technologies and improve my skills. I am a hardworking and dedicated individual who is always looking for new challenges and opportunities to grow as a developer.</p>
                 
                 <div class="social">
-                    
                     <a href="https://github.com/CliffHanger06"><i class="fab fa-github"></i></a>
                     <a href="https://www.instagram.com/pranshuparth"><i class="fab fa-instagram"></i></a>
                     <a href="https://www.linkedin.com/in/pranshu-parth-49318a288"><i class="fab fa-linkedin-in"></i></a>
                 </div>
-                
-            
             </div>
             
             <div class="profile">
-                <div class="hex-container">
-                    <div class="hex-shape"></div>
-                    <div class="hex-image"></div>
-                </div>
+                <img src="pics/profile.png" alt="Profile Picture" class="profile-image">
             </div>
         </div>
     </div>
@@ -501,8 +41,8 @@
     <section id="home">
         <div class="home-content">
             <h1>Welcome to My Portfolio</h1>
-            <p>Hi, I'm Pranshu Parth, a passionate Frontend Developer currently in my second year of college. I'm dedicated to learning and mastering modern web technologies while building beautiful, responsive digital experiences.
-                My journey in web development began through self-learning and coursework, where I discovered my passion for creating interfaces that combine aesthetic appeal with functionality. I've been strengthening my skills in HTML, CSS, JavaScript, and exploring frameworks like React to expand my development toolkit.</p>
+            <p>Hi, I'm Pranshu Parth, a passionate Frontend Developer currently in my second year of college. I'm dedicated to learning and mastering modern web technologies while building beautiful, responsive digital experiences.</p>
+            <p>My journey in web development began through self-learning and coursework, where I discovered my passion for creating interfaces that combine aesthetic appeal with functionality. I've been strengthening my skills in HTML, CSS, JavaScript, and exploring frameworks like React to expand my development toolkit.</p>
         </div>
     </section>
 
@@ -526,7 +66,7 @@
                                 <span>70%</span>
                             </div>
                             <div class="skill-bar">
-                                <div class="skill-bar-fill" style="width: 90%;"></div>
+                                <div class="skill-bar-fill" style="--fill-width: 70%;"></div>
                             </div>
                         </li>
                         <li>
@@ -535,7 +75,7 @@
                                 <span>50%</span>
                             </div>
                             <div class="skill-bar">
-                                <div class="skill-bar-fill" style="width: 85%;"></div>
+                                <div class="skill-bar-fill" style="--fill-width: 50%;"></div>
                             </div>
                         </li>
                         <li>
@@ -544,7 +84,7 @@
                                 <span>10%</span>
                             </div>
                             <div class="skill-bar">
-                                <div class="skill-bar-fill" style="width: 75%;"></div>
+                                <div class="skill-bar-fill" style="--fill-width: 10%;"></div>
                             </div>
                         </li>
                         <li>
@@ -553,10 +93,9 @@
                                 <span>20%</span>
                             </div>
                             <div class="skill-bar">
-                                <div class="skill-bar-fill" style="width: 70%;"></div>
+                                <div class="skill-bar-fill" style="--fill-width: 20%;"></div>
                             </div>
                         </li>
-                    
                     </ul>
                 </div>
                 <div class="card">
@@ -568,7 +107,7 @@
                                 <span>85%</span>
                             </div>
                             <div class="skill-bar">
-                                <div class="skill-bar-fill" style="width: 85%;"></div>
+                                <div class="skill-bar-fill" style="--fill-width: 85%;"></div>
                             </div>
                         </li>
                         <li>
@@ -577,7 +116,7 @@
                                 <span>90%</span>
                             </div>
                             <div class="skill-bar">
-                                <div class="skill-bar-fill" style="width: 90%;"></div>
+                                <div class="skill-bar-fill" style="--fill-width: 90%;"></div>
                             </div>
                         </li>
                         <li>
@@ -586,7 +125,7 @@
                                 <span>80%</span>
                             </div>
                             <div class="skill-bar">
-                                <div class="skill-bar-fill" style="width: 80%;"></div>
+                                <div class="skill-bar-fill" style="--fill-width: 80%;"></div>
                             </div>
                         </li>
                         <li>
@@ -595,7 +134,7 @@
                                 <span>75%</span>
                             </div>
                             <div class="skill-bar">
-                                <div class="skill-bar-fill" style="width: 75%;"></div>
+                                <div class="skill-bar-fill" style="--fill-width: 75%;"></div>
                             </div>
                         </li>
                         <li>
@@ -604,7 +143,7 @@
                                 <span>85%</span>
                             </div>
                             <div class="skill-bar">
-                                <div class="skill-bar-fill" style="width: 85%;"></div>
+                                <div class="skill-bar-fill" style="--fill-width: 85%;"></div>
                             </div>
                         </li>
                     </ul>
@@ -617,29 +156,12 @@
         <div class="contact-content">
             <h1>Contact Me</h1>
             <p>You can reach me at:</p>
-            <ul>
-                <li>Email: <a href="mailto:pranshu.parth@example.com">pranshu.parth@example.com</a></li>
-                <li>LinkedIn: <a href="https://www.linkedin.com/in/pranshu-parth-49318a288/" target="_blank">linkedin.com/in/pranshu-parth</a></li>
-                <li>GitHub: <a href="https://github.com/CliffHanger06" target="_blank">github.com/CliffHanger06</a></li>
+            <ul class="contact-list">
+                <a href="https://www.linkedin.com/in/pranshu-parth-49318a288/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/CliffHanger06" target="_blank"><i class="fab fa-github"></i></a>
             </ul>
-            <form action="/submit-form" method="post">
-                <div>
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div>
-                    <label for="message">Message:</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
-                </div>
-                <div>
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
         </div>
     </section>
+   
 </body>
 </html>
